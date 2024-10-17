@@ -1,22 +1,20 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import SidebarComponent from './components/sidebar/sidebarComponent.vue'
+import { ChartBarIcon } from 'lucide-vue-next'
+import { CalendarIcon } from 'lucide-vue-next'
+import { UsersIcon } from 'lucide-vue-next'
+import { CreditCardIcon } from 'lucide-vue-next'
+const menuItems = [
+  { name: 'Dashboard', icon: ChartBarIcon, href: '#' },
+  { name: 'Agenda', icon: CalendarIcon, href: '#' },
+  { name: 'Clientes', icon: UsersIcon, href: '#' },
+  { name: 'Facturación', icon: CreditCardIcon, href: '#' }
+]
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <SidebarComponent :menuItems="menuItems" />
   <RouterView />
 </template>
 
