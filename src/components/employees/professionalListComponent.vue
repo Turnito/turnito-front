@@ -11,11 +11,6 @@
           <th
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            Especialidad
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
             Contacto
           </th>
           <th
@@ -31,11 +26,8 @@
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        <tr v-for="professional in professionals" :key="professional.id">
+        <tr v-for="professional in employeeStore.professional" :key="professional.id">
           <td class="px-6 py-4 whitespace-nowrap">{{ professional.name }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            {{ getSpecialtyName(professional.specialtyId) }}
-          </td>
           <td class="px-6 py-4 whitespace-nowrap">{{ professional.email }}</td>
           <td class="px-6 py-4 whitespace-nowrap">{{ formatWorkDays(professional.workDays) }}</td>
           <td class="px-6 py-4 whitespace-nowrap">
@@ -59,16 +51,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useEmployeeStore } from '@/stores/employeeStore'
 import { Edit2Icon, TrashIcon } from 'lucide-vue-next'
 
-const professionals = ref([
-  /*... tu lista de profesionales ...*/
-])
-
-const getSpecialtyName = (id) => {
-  // Implementar lógica para obtener el nombre de la especialidad basado en el ID
-}
+const employeeStore = useEmployeeStore()
 
 const formatWorkDays = (workDays) => {
   const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
@@ -76,10 +62,10 @@ const formatWorkDays = (workDays) => {
 }
 
 const editProfessional = (professional) => {
-  // Implementar lógica para editar profesional
+  employeeStore.professionalSelected = professional
 }
 
 const deleteProfessional = (id) => {
-  // Implementar lógica para eliminar profesional
+  employeeStore.deleteProfessional(id)
 }
 </script>
