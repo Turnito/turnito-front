@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-6 mt-5 ml-5">
       <h1 class="text-3xl font-semibold text-gray-800">Gestión de Agendas</h1>
       <div class="space-x-2">
         <button

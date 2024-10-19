@@ -1,73 +1,68 @@
 <template>
-  <div class="flex h-screen bg-gray-100 w-full">
-    <main class="flex-1 overflow-x-hidden overflow-y-auto w-full">
-      <div class="w-full px-6 py-8">
-        <div class="flex justify-between items-center mb-6">
-          <SearchBarComponent />
-          <button
-            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200"
-          >
-            <PlusIcon class="h-5 w-5 inline-block mr-1" />
-            Agregar
-          </button>
+  <div class="p-6 bg-gray-100 min-h-screen w-full">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Citas por Mes</h2>
         </div>
-
-        <div class="grid grid-cols-3 gap-6">
-          <div class="space-y-6">
-            <KpiCardComponent v-for="kpi in kpis" :key="kpi.title" :kpi="kpi" />
-          </div>
-          <upcomingAppointmentComponent :appointments="upcomingAppointments" />
-          <div class="space-y-6">
-            <IncomeChartComponent :data="[500, 800, 1200, 1000, 1500, 1800, 2000]" />
-            <ClientSatisfactionComponent :clientSatisfaction="clientSatisfaction" />
-          </div>
+        <div class="p-4">
+          <AppointmentsChart />
         </div>
       </div>
-    </main>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Ingresos</h2>
+        </div>
+        <div class="p-4">
+          <RevenueChart />
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Servicios Más Populares</h2>
+        </div>
+        <div class="p-4">
+          <TopServices />
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Tasa de Retención de Clientes</h2>
+        </div>
+        <div class="p-4">
+          <ClientRetentionRate />
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Próximas Citas</h2>
+        </div>
+        <div class="p-4">
+          <UpcomingAppointments />
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-4 bg-gray-50 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-700">Rendimiento del Personal</h2>
+        </div>
+        <div class="p-4">
+          <StaffPerformance />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script setup>
-import upcomingAppointmentComponent from '@/components/dashboard/upcomingAppoiments.vue'
-import { PlusIcon } from 'lucide-vue-next'
-import SearchBarComponent from '@/components/sidebar/searchBarComponent.vue'
-import KpiCardComponent from '@/components/dashboard/kpiCardComponent.vue'
-import IncomeChartComponent from '@/components/dashboard/incomeChartComponent.vue'
-import ClientSatisfactionComponent from '@/components/dashboard/clientSatisfactionComponent.vue'
-import { UsersIcon } from 'lucide-vue-next'
-import { CalendarIcon } from 'lucide-vue-next'
-
-const kpis = [
-  {
-    title: 'Turnos del Mes',
-    value: '245',
-    description: '15% más que el mes pasado',
-    icon: CalendarIcon
-  },
-  {
-    title: 'Clientes Nuevos',
-    value: '30',
-    description: '6 nuevos clientes esta semana',
-    icon: UsersIcon
-  }
-]
-
-const upcomingAppointments = [
-  {
-    id: 1,
-    client: 'Juan Pérez',
-    service: 'Corte de Cabello',
-    date: 'Hoy a las 15:00',
-    avatar: '/path/to/avatar1.jpg'
-  },
-  {
-    id: 2,
-    client: 'Ana González',
-    service: 'Manicura',
-    date: 'Mañana a las 10:00',
-    avatar: '/path/to/avatar2.jpg'
-  }
-]
-
-const clientSatisfaction = 85
+import AppointmentsChart from '@/components/dashboard/AppointmentsChart.vue'
+import RevenueChart from '@/components/dashboard/RevenueChart.vue'
+import TopServices from '@/components/dashboard/TopServices.vue'
+import ClientRetentionRate from '@/components/dashboard/ClientRetentionRate.vue'
+import UpcomingAppointments from '@/components/dashboard/upcomingAppointments.vue'
+import StaffPerformance from '@/components/dashboard/StaffPerformance.vue'
 </script>
