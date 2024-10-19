@@ -22,14 +22,22 @@
 </template>
 
 <script setup>
-import { CalendarIcon, UsersIcon, CreditCardIcon, ChartBarIcon, Briefcase } from 'lucide-vue-next'
+import {
+  CalendarIcon,
+  UsersIcon,
+  CreditCardIcon,
+  ChartBarIcon,
+  Briefcase,
+  Brush
+} from 'lucide-vue-next'
 
 const menuItems = [
   { name: 'Dashboard', icon: ChartBarIcon, routeName: 'dashboard-company' }, // Reemplazar si usas un icono de Lucide
   { name: 'Agenda', icon: CalendarIcon, routeName: 'schedules' },
   { name: 'Clientes', icon: UsersIcon, routeName: 'client-management' },
   { name: 'Promos', icon: CreditCardIcon, routeName: 'promotion' },
-  { name: 'Empleados', icon: Briefcase, routeName: 'employees' }
+  { name: 'Empleados', icon: Briefcase, routeName: 'employees' },
+  { name: 'branding', icon: Brush, routeName: 'branding-customer' }
 ]
 </script>
 
