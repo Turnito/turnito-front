@@ -1,49 +1,117 @@
 <template>
-  <aside class="w-16 bg-indigo-900 text-white h-screen">
-    <div class="p-4">
-      <div
-        class="w-8 h-8 bg-white text-indigo-900 rounded-md flex items-center justify-center font-bold text-xl"
-      >
-        P
+  <div
+    :class="[
+      'transition-all duration-300 ease-in-out flex flex-col',
+      isCollapsed ? 'w-16' : 'w-64'
+    ]"
+    class="h-screen bg-indigo-900 text-white"
+  >
+    <div class="flex-1 overflow-y-auto">
+      <div class="p-4">
+        <img
+          v-if="isCollapsed"
+          src="https://res.cloudinary.com/dn6dmzeqq/image/upload/v1727491478/logoPrincipe_qhmwyd.png"
+          alt="Logo"
+          class="w-8 h-8 mx-auto"
+        />
+        <div v-else class="flex items-center">
+          <img
+            src="https://res.cloudinary.com/dn6dmzeqq/image/upload/v1727491478/logoPrincipe_qhmwyd.png"
+            alt="Logo"
+            class="w-8 h-8 mr-2"
+          />
+          <h1 class="text-xl font-bold">Hair Salon CRM</h1>
+        </div>
       </div>
+      <nav class="mt-8">
+        <div v-for="(item, index) in navItems" :key="index" class="mb-4">
+          <button
+            @click="navigateOrToggle(item)"
+            :class="[
+              'flex items-center w-full py-2 px-3 text-gray-300 hover:bg-indigo-700 rounded transition-colors duration-150',
+              { 'justify-center': isCollapsed }
+            ]"
+          >
+            <component :is="item.icon" :size="isCollapsed ? 24 : 20" />
+            <span v-if="!isCollapsed" class="ml-3 flex-grow text-left">{{ item.name }}</span>
+            <ChevronDown v-if="!isCollapsed && item.items && item.expanded" size="16" />
+            <ChevronRight v-if="!isCollapsed && item.items && !item.expanded" size="16" />
+          </button>
+          <div v-if="!isCollapsed && item.items && item.expanded" class="mt-2 ml-6">
+            <button
+              v-for="(subItem, subIndex) in item.items"
+              :key="subIndex"
+              @click="navigate(subItem.routeName)"
+              class="flex items-center w-full py-2 px-3 text-gray-300 hover:bg-gray-800 rounded transition-colors duration-150"
+            >
+              <component :is="subItem.icon" size="20" />
+              <span class="ml-3">{{ subItem.name }}</span>
+            </button>
+          </div>
+        </div>
+      </nav>
     </div>
-    <nav class="mt-8">
-      <transition name="fade"> </transition>
-      <router-link
-        v-for="item in menuItems"
-        :key="item.name"
-        :to="{ name: item.routeName }"
-        class="flex items-center justify-center p-4 text-indigo-300 hover:bg-indigo-800 hover:text-white transition-colors duration-200"
+    <div class="p-4">
+      <button
+        @click="toggleSidebar"
+        :class="[
+          'flex items-center justify-center w-full py-2 text-gray-300 hover:bg-indigo-700 bg-indigo-900 rounded transition-colors duration-150',
+          { 'px-3': !isCollapsed }
+        ]"
       >
-        <component :is="item.icon" class="w-6 h-6" />
-      </router-link>
-    </nav>
-  </aside>
+        <ChevronLeft v-if="!isCollapsed" size="24" />
+        <ChevronRight v-else size="24" />
+        <span v-if="!isCollapsed" class="ml-3">Collapse</span>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import {
+  ChevronRight,
+  ChevronDown,
+  ChevronLeft,
+  ChartBarIcon,
   CalendarIcon,
   UsersIcon,
   CreditCardIcon,
-  ChartBarIcon,
   Briefcase,
   Brush
 } from 'lucide-vue-next'
-
-const menuItems = [
-  { name: 'Dashboard', icon: ChartBarIcon, routeName: 'dashboard-company' }, // Reemplazar si usas un icono de Lucide
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const isCollapsed = ref(false)
+const navItems = ref([
+  { name: 'Dashboard', icon: ChartBarIcon, routeName: 'dashboard-company' },
   { name: 'Agenda', icon: CalendarIcon, routeName: 'schedules' },
   { name: 'Clientes', icon: UsersIcon, routeName: 'client-management' },
   { name: 'Promos', icon: CreditCardIcon, routeName: 'promotion' },
   { name: 'Empleados', icon: Briefcase, routeName: 'employees' },
   { name: 'branding', icon: Brush, routeName: 'branding-customer' }
-]
-</script>
+])
 
-<style>
-.icon-class {
-  width: 20px;
-  height: 20px;
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value
 }
-</style>
+
+const toggleExpand = (item) => {
+  if (item.items && !isCollapsed.value) {
+    item.expanded = !item.expanded
+  }
+}
+const navigateOrToggle = (item) => {
+  if (item.items) {
+    if (!isCollapsed.value) {
+      item.expanded = !item.expanded
+    }
+  } else if (item.routeName) {
+    navigate(item.routeName)
+  }
+}
+
+const navigate = (routeName) => {
+  router.push({ name: routeName })
+}
+</script>
